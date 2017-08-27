@@ -1,0 +1,15 @@
+powerfile <- read.table(file = "household_power_consumption.txt",sep = ";",colClasses = "character",col.names = c("Date","Time","Global_active_power","Global_reactive_power","Voltage","Global_intensity","Sub_metering_1","Sub_metering_2","Sub_metering_3"),skip = 66637,nrows = 2880,na.strings = "?")
+powerfile$Global_active_power <- as.numeric(powerfile$Global_active_power)
+powerfile$Global_reactive_power <- as.numeric(powerfile$Global_reactive_power)
+powerfile$Voltage <- as.numeric(powerfile$Voltage)
+powerfile$Global_intensity <- as.numeric(powerfile$Global_intensity)
+powerfile$Sub_metering_1 <- as.numeric(powerfile$Sub_metering_1)
+powerfile$Sub_metering_3 <- as.numeric(powerfile$Sub_metering_3)
+powerfile$Sub_metering_2 <- as.numeric(powerfile$Sub_metering_2)
+powerfile$Datetime <- strptime( paste(powerfile$Date,powerfile$Time),"%d/%m/%Y %H:%M:%S",tz = "UCT")
+
+
+png("plot2.png",width = 480,height = 480)
+par(bg=NA) 
+plot(x = powerfile$Datetime,y = powerfile$Global_active_power,type = "l",ylab = "Gloabl Active Power (kilowatts)",xlab="")
+dev.off()
